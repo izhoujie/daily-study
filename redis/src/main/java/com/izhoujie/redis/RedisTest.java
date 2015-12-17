@@ -42,7 +42,7 @@ public class RedisTest {
 		config.setMaxWaitMillis(10001);
 		config.setTestOnBorrow(false);
 
-		jedisPool = new JedisPool(config, "123.57.51.150", 6379, 0);
+		jedisPool = new JedisPool(config, "******", 6379, 0);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class RedisTest {
 
 		List<JedisShardInfo> shards = new ArrayList<JedisShardInfo>();
 
-		shards.add(new JedisShardInfo("123.57.51.150", 6379, "master"));
+		shards.add(new JedisShardInfo("******", 6379, "master"));
 
 		sharedJedisPool = new ShardedJedisPool(config, shards);
 
