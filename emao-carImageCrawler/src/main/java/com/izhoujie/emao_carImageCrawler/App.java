@@ -15,7 +15,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * Hello world!
  * 
- * test
+ * -Test
  *
  */
 public class App {
@@ -35,7 +35,7 @@ public class App {
 		String html = method.getResponseBodyAsString();
 		method.releaseConnection();
 
-		 System.out.println(html);
+		System.out.println(html);
 		Parser parser = new Parser("http://auto.emao.com/pic/");
 		System.out.println(parser.getURL());
 
