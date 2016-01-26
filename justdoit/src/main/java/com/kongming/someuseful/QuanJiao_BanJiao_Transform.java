@@ -3,7 +3,7 @@ package com.kongming.someuseful;
 /**
  * @author ACER
  * 
- *         实现对字符串中全角字符和半角字符的互相转换
+ *         -实现对字符串中全角字符和半角字符的互相转换
  */
 public class QuanJiao_BanJiao_Transform {
 

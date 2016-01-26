@@ -7,12 +7,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * @author km-zhou
+ *
+ *         -线程同步之显式锁和隐式锁
+ *
+ *         -Lock：1-对象级别锁，不要设为多线程类的私有属性，应设为共享资源
+ *         如static类级别变量。2-更细粒度的控制。3-无阻塞式。4-公平锁。5-代码级别锁。
+ * 
+ *         -Synchronized：1-类级别锁。2-阻塞式锁。3-非公平锁。4-JVM级别锁。
+ */
 public class Lock_Sychronized {
 	public static void main(String[] args) throws Exception {
 
-		// 显示锁
+		// 显示锁任务测试
 		runTask(Task_Lock.class);
-		// 隐式锁
+		// 隐式锁任务测试
 		runTask(Task_Sync.class);
 
 	}
@@ -28,7 +38,7 @@ public class Lock_Sychronized {
 
 		}
 
-		// 等待，给输出预留时间
+		// 等待，给线程预留足够的处理时间
 		TimeUnit.SECONDS.sleep(10);
 		System.out.println("*********" + task.getSimpleName() + "执行完毕**********\n");
 
@@ -52,7 +62,6 @@ class Task {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
