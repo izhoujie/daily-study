@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 
 public class Map_test {
 	public static void main(String[] args) {
-		HashMap<Integer, String> map = new HashMap<>();
-		HashMap<Integer, String> mapmore = new HashMap<>();
+		HashMap<Integer, String> map = new HashMap<Integer, String>();
+		HashMap<Integer, String> mapmore = new HashMap<Integer, String>();
 
 		map.put(1, "1");
 		map.put(2, "2");

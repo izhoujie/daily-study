@@ -3,8 +3,11 @@ package com.kongming.test;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Test {
 	public static void main(String[] args) {
@@ -12,8 +15,8 @@ public class Test {
 		String str1 = "weixin,weixin_user,huggies_double_eleven,huggies_fetalmove_records,huggies_invite_code,huggies_invite_code_T3,huggies_invite_code_xinsheng,huggies_invite_coupon,huggies_invite_coupon_xinsheng,huggies_pome_coupon,huggies_T3_address,huggies_T3_coupon,huggies_t3_mingdan,huggies_t3_prize,huggies_t5_hongbao_duijiang,baby_info,vertical_user,campaign20140318,T5trail,t5hotmom,T5apply,T3weibo,T3campaign,pants,message,app,weibowin,customer,T4_UserData,T4_picasso_Users,T3_Trial_User,T3_2012_GameResultUser,ProductTrial_UserRequest,Pome_UserUpload,PantsLaunch_Log_PlayGame,Pants_EDM_Confirm,Kongfu_Photos,Jean_Photos,Hospital_upload,Hospital_0128,happy40weeks,EC,EC2014";
 		String[] split = str.split(", ");
 		String[] split1 = str1.split(",");
-		HashSet<String> set = new HashSet<>(Arrays.asList(split));
-		HashSet<String> set1 = new HashSet<>(Arrays.asList(split1));
+		HashSet<String> set = new HashSet<String>(Arrays.asList(split));
+		HashSet<String> set1 = new HashSet<String>(Arrays.asList(split1));
 
 		System.out.println(set.size());
 		System.out.println(set1.size());
@@ -23,26 +26,45 @@ public class Test {
 		for (int i = 0; i < split.length; i++) {
 			System.out.print(split[i] + "  ");
 		}
-		
+
 		System.getProperties().setProperty("proxySet", "true");
 		System.getProperties().setProperty("http.proxyHost", "192.168.130.15");
 		System.getProperties().setProperty("http.proxyPort", "8848");
-		
+
 		System.getProperties().setProperty("Zhou", "Jie");
-		
+
 		Properties properties = System.getProperties();
-		
-		
+
 		Iterator<Entry<Object, Object>> iterator = properties.entrySet().iterator();
-		
+
 		while (iterator.hasNext()) {
-			Entry<java.lang.Object, java.lang.Object> entry = iterator
-					.next();
-			
-			System.out.println(entry.getKey()+"--"+entry.getValue());
+			Entry<java.lang.Object, java.lang.Object> entry = iterator.next();
+
+			System.out.println(entry.getKey() + "--" + entry.getValue());
 		}
-		
+
 		System.out.println(System.getProperties().getProperty("Zhou"));
 		System.out.println(System.getProperty("Zhou"));
+
+		List<String> list = Arrays.asList(split);
+
+		// lambda表达式以及 函数操作
+		Consumer<Object> tb = (Object sss) -> {
+			System.out.println("" + sss);
+		};
+
+		Predicate<String> p = (String sss) -> {
+			// System.out.println("Hello World!" + sss);
+			sss = sss.replaceAll("huggies", "KMKM");
+			System.out.println(sss);
+			return sss.length() > 4;
+		};
+
+		list.stream().filter(p).forEach(tb);
+
+		// forEach() 方法内实际为一个Consumer 对象 其类型是forEach中 T的上界 list.forEach(tb);
+		 list.forEach(table -> System.out.println(table)); // 冒号操作
+		 list.forEach(System.out::println);
+
 	}
 }
