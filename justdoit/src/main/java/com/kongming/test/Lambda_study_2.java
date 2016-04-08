@@ -123,6 +123,8 @@ public class Lambda_study_2 {
 		System.out.println(sum1);
 		Integer sum2 = Stream.of(3, 6, 29, 10, 33, 22, 4, 64).sorted().reduce(Integer::sum).get();
 		System.out.println(sum2);
+		Runnable dr = System.out::println;
+		System.out.println(dr);
 
 	}
 }
