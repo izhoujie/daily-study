@@ -33,12 +33,12 @@ public class Lambda_study_1 {
 		};
 
 		System.out.println(f.apply(1000));
-		// java8  新增接口 lambda形式的常用参数 返回void
+		// java8  新增接口 lambda形式的常用参数 返回值类型：void
 		Consumer<Integer> user = (Integer n) -> {
 			System.out.println("Hello World!" + n);
 		};
 		user.accept(999);
-		// java8  新增接口  返回Boolean值
+		// java8  新增接口  返回值类型：boolean
 		Predicate<Integer> p = (Integer n) -> {
 			System.out.println("Hello World!" + n);
 
