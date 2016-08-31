@@ -1,4 +1,4 @@
-package com.kongming.test;
+package com.kongming.lambda;
 
 import java.util.ArrayList;
 import java.util.Arrays;
