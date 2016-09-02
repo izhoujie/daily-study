@@ -1,16 +1,27 @@
 package com.izhoujie.emao_carImageCrawler;
 
+import java.net.StandardSocketOptions;
+import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.NodeClassFilter;
+import org.htmlparser.filters.TagNameFilter;
+import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import java_cup.runtime.Symbol;
 
 /**
  * Hello world!
@@ -26,7 +37,7 @@ public class Test {
 	// 获取HttpClient对象--客户端实例
 	HttpClient client = new HttpClient();
 	// 获取GetMethod对象 以get方式
-	HttpMethod method = new GetMethod("http://auto.emao.com/pic/1/2/y2013/0-39220.html");
+	HttpMethod method = new GetMethod("http://auto.emao.com/pic/");
 	// 进行url访问
 	client.executeMethod(method);
 	// 打印服务器返回状态
@@ -35,18 +46,18 @@ public class Test {
 	String html = method.getResponseBodyAsString();
 	method.releaseConnection();
 
-	System.out.println(html);
+	// System.out.println(html);
 	Parser parser = new Parser("http://auto.emao.com/pic/");
 	System.out.println(parser.getURL());
 
-	HasAttributeFilter filter = new HasAttributeFilter("class", "subBrand ");
+	HasAttributeFilter filter = new HasAttributeFilter("class", "mainBrand ");
 
 	NodeList list = parser.parse(filter);
 
 	System.out.println(list.size());
 
 	// HashSet<String> brand = new HashSet<String>();
-	// for (int i = 0; i < list.size(); i++) {
+	// for (int i = 0; i < 3; i++) {
 	// Node node = list.elementAt(i);
 	//
 	// NodeList node1 = node.getChildren();
@@ -54,27 +65,99 @@ public class Test {
 	// brand.add(text2);
 	//
 	// String text = node.toHtml();
-	// System.out.println(node);
-	// System.out.println(text);
-	// System.out.println(text.split("\"")[1]);
-	// System.out.println(text2);
+	// System.out.println("p1:" + node);
+	// System.out.println("p2:" + text);
+	// System.out.println("p3:" + text.split("\"")[1]);
+	// System.out.println("p4:" + text2);
 	// }
 
 	Node node = list.elementAt(0);
 	String carName = node.getChildren().elementAt(1).getText();
 	String car = node.toHtml().split("\"")[1];
-
+	// 车铭牌
 	System.out.println(carName);
+	System.out.println(car);
 	Parser parser2 = new Parser(host + car);
 
-	HasAttributeFilter filter2 = new HasAttributeFilter("class", "pic-min");
+	HasAttributeFilter filter2 = new HasAttributeFilter("class", "subBrand ");
 
 	NodeList list2 = parser2.parse(filter2);
-
+	// 需要判断大小 若0则continue
+	System.out.println(list2.size());
 	Node node2 = list2.elementAt(0);
-
-	System.out.println(node2);
+	// 具体某车型
 	System.out.println(node2.toHtml());
+	// 具体车型的跳转链接
+	String subCar = node2.toHtml().split("\"")[1];
+	System.out.println("车：" + subCar);
+	// 具体车型名称
+	String text = node2.getChildren().elementAt(1).getText();
+	System.out.println(text);
+
+	Parser parser4 = new Parser(host + subCar);
+	// 滤取有图片的ul标签
+	HasAttributeFilter filter5 = new HasAttributeFilter("class", "car-list-pic");
+	// 获取下一页的link-若有
+	AndFilter andFilter = new AndFilter(new HasAttributeFilter("href"), new HasAttributeFilter("rel", "next"));
+
+	NodeList list5 = parser4.parse(filter5);
+	parser4.reset();
+	NodeList nodeList = parser4.parse(andFilter);
+
+	System.out.println(list5.size());
+	// 获得图片的ul
+	// System.out.println(list5.elementAt(0));
+	System.out.println(nodeList.size());
+	Parser parser7 = new Parser(list5.elementAt(0).toHtml());
+	TagNameFilter filter6 = new TagNameFilter("li");
+	NodeList list4 = parser7.parse(filter6);
+	System.out.println(list4.size());
+	String html3 = list4.elementAt(0).toHtml();
+	System.out.println(html3);
+	System.out.println("测试");
+	System.out.println(list4.elementAt(0).getChildren().elementAt(3).getText());
+	// java正则解析
+	Pattern compile1 = Pattern.compile("src=.*.jpg");
+	Pattern compile2 = Pattern.compile("<span>.*</span>");
+	Pattern compile3 = Pattern.compile("href=.*html");
+	Matcher matcher1 = compile1.matcher(html3);
+	Matcher matcher2 = compile2.matcher(html3);
+	Matcher matcher3 = compile3.matcher(nodeList.elementAt(0).toHtml());
+	if (matcher1.find()) {
+	    System.out.println(matcher1.group(0).split("\"")[1]);
+	}
+	if (matcher2.find()) {
+	    System.out.println(matcher2.group(0));
+	}
+	if (matcher3.find()) {
+	    System.out.println(matcher3.group(0).split("\"")[1]);
+	}
+	// 一张图片的解析完毕，但页循环处理，处理完毕后检查是否有下一页link，若有则递归处理
+	// 是否有下一页
+	// System.out.println(nodeList.elementAt(0).toHtml());
+
+	System.exit(0);
+
+	Node node5 = list5.elementAt(0);
+
+	System.out.println(node5.toHtml());
+	Parser parser5 = new Parser(node5.toHtml());
+	NodeList list6 = parser5.parse(filter6);
+	System.out.println(list6.size());
+	String html2 = list6.elementAt(0).toHtml();
+	System.out.println(html2);
+
+	Parser parser6 = new Parser(html2);
+	HasAttributeFilter filter9 = new HasAttributeFilter("src");
+	TagNameFilter filter10 = new TagNameFilter("span");
+
+	NodeList list9 = parser6.parse(filter9);
+	NodeList list10 = parser6.parse(filter10);
+
+	System.out.println(list9.toHtml());
+	System.out.println(list10.toHtml());
+	System.out.println(list10.size());
+
 	String toCarImg = node2.toHtml().split("\"")[5];
 
 	System.out.println("3--" + toCarImg);

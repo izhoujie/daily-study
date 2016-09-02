@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
@@ -34,10 +36,12 @@ public class AllCars {
 	// 图库页面
 	Parser parser = new Parser("http://auto.emao.com/pic/");
 	// 滤取class=subBrand的标签，每个标签就是一个车
-	HasAttributeFilter filter1 = new HasAttributeFilter("class", "subBrand ");
+	HasAttributeFilter filter1 = new HasAttributeFilter("class", "mainBrand ");
 
 	// 拿到所有车的list
 	NodeList htmlCars = parser.parse(filter1);
+	System.out.println(htmlCars.size());
+	System.exit(0);
 	// 逐个解析
 	for (int i = 0; i < htmlCars.size(); i++) {
 	    Node node = htmlCars.elementAt(i);
