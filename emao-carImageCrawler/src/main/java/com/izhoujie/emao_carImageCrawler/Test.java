@@ -138,26 +138,6 @@ public class Test {
 
 	System.exit(0);
 
-	Node node5 = list5.elementAt(0);
-
-	System.out.println(node5.toHtml());
-	Parser parser5 = new Parser(node5.toHtml());
-	NodeList list6 = parser5.parse(filter6);
-	System.out.println(list6.size());
-	String html2 = list6.elementAt(0).toHtml();
-	System.out.println(html2);
-
-	Parser parser6 = new Parser(html2);
-	HasAttributeFilter filter9 = new HasAttributeFilter("src");
-	TagNameFilter filter10 = new TagNameFilter("span");
-
-	NodeList list9 = parser6.parse(filter9);
-	NodeList list10 = parser6.parse(filter10);
-
-	System.out.println(list9.toHtml());
-	System.out.println(list10.toHtml());
-	System.out.println(list10.size());
-
 	String toCarImg = node2.toHtml().split("\"")[5];
 
 	System.out.println("3--" + toCarImg);
@@ -178,6 +158,5 @@ public class Test {
 	String string = node3.toHtml().split("\"")[3];
 
 	System.out.println(string.subSequence(0, string.lastIndexOf("/")));
-
     }
 }
