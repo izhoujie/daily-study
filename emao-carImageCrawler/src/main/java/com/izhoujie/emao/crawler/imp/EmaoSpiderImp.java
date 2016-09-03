@@ -103,9 +103,5 @@ public class EmaoSpiderImp implements EmaoSpider {
 	} catch (Exception e) {
 
 	}
-
-	System.exit(0);
-
     }
-
 }
