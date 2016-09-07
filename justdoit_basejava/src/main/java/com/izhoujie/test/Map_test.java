@@ -1,4 +1,4 @@
-package com.kongming.test;
+package com.izhoujie.test;
 
 import java.util.HashMap;
 import java.util.Iterator;

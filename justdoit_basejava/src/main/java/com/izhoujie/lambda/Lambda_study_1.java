@@ -1,4 +1,4 @@
-package com.kongming.lambda;
+package com.izhoujie.lambda;
 
 import java.util.Comparator;
 import java.util.concurrent.Callable;

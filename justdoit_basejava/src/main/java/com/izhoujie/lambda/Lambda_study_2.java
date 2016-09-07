@@ -1,4 +1,4 @@
-package com.kongming.lambda;
+package com.izhoujie.lambda;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.kongming.threads;
+package com.izhoujie.threads;
 
 import java.util.ArrayList;
 import java.util.Random;

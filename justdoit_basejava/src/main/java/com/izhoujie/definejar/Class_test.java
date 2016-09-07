@@ -1,4 +1,4 @@
-package com.kongming.definejar;
+package com.izhoujie.definejar;
 
 import java.util.Iterator;
 import java.util.Map.Entry;

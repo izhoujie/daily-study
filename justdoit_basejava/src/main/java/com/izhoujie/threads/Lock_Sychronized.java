@@ -1,4 +1,4 @@
-package com.kongming.threads;
+package com.izhoujie.threads;
 
 import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
