@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * @author km-zhou
+ * @author admin@izhoujie.com
  *
  *         -线程同步之显式锁和隐式锁
  *
@@ -18,34 +18,34 @@ import java.util.concurrent.locks.ReentrantLock;
  *         -Synchronized：1-类级别锁。2-阻塞式锁。3-非公平锁。4-JVM级别锁。
  */
 public class Lock_Sychronized {
-	public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
-		// 显示锁任务测试
-		runTask(Task_Lock.class);
-		// 隐式锁任务测试
-		runTask(Task_Sync.class);
+	// 显示锁任务测试
+	runTask(Task_Lock.class);
+	// 隐式锁任务测试
+	runTask(Task_Sync.class);
 
-	}
+    }
 
-	public static void runTask(Class<? extends Runnable> task) throws Exception {
-		// 缓冲线程池
-		ExecutorService pool = Executors.newCachedThreadPool();
-		System.out.println("*********" + task.getSimpleName() + "开始执行**********");
+    public static void runTask(Class<? extends Runnable> task) throws Exception {
+	// 缓冲线程池
+	ExecutorService pool = Executors.newCachedThreadPool();
+	System.out.println("*********" + task.getSimpleName() + "开始执行**********");
 
-		for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++) {
 
-			pool.submit(task.newInstance());
-
-		}
-
-		// 等待，给线程预留足够的处理时间
-		TimeUnit.SECONDS.sleep(10);
-		System.out.println("*********" + task.getSimpleName() + "执行完毕**********\n");
-
-		// 关闭线程池
-		pool.shutdown();
+	    pool.submit(task.newInstance());
 
 	}
+
+	// 等待，给线程预留足够的处理时间
+	TimeUnit.SECONDS.sleep(10);
+	System.out.println("*********" + task.getSimpleName() + "执行完毕**********\n");
+
+	// 关闭线程池
+	pool.shutdown();
+
+    }
 
 }
 
@@ -56,21 +56,21 @@ public class Lock_Sychronized {
  */
 class Task {
 
-	public void doSomething() {
+    public void doSomething() {
 
-		// 线程等待2秒完成业务处理
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		// 打印当前线程信息
-		String name = Thread.currentThread().getName();
-		int s = Calendar.getInstance().get(13);
-		System.out.println("线程名-" + name + "，执行时间：" + s);
-
+	// 线程等待2秒完成业务处理
+	try {
+	    Thread.sleep(2000);
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
 	}
+
+	// 打印当前线程信息
+	String name = Thread.currentThread().getName();
+	int s = Calendar.getInstance().get(13);
+	System.out.println("线程名-" + name + "，执行时间：" + s);
+
+    }
 }
 
 /**
@@ -79,22 +79,22 @@ class Task {
  *         -显式锁/外部锁
  */
 class Task_Lock extends Task implements Runnable {
-	// Lock本身是对象级别的锁，声明为static将其升级到类级别才能跟Sync有一样的同步效果
-	private static Lock lock = new ReentrantLock();
-	// 如果是fianl 则lock还是对象级别的锁，每次都是新new一个锁，必然不会有线程同步的效果
-	// private final Lock lock = new ReentrantLock();
+    // Lock本身是对象级别的锁，声明为static将其升级到类级别才能跟Sync有一样的同步效果
+    private static Lock lock = new ReentrantLock();
+    // 如果是fianl 则lock还是对象级别的锁，每次都是新new一个锁，必然不会有线程同步的效果
+    // private final Lock lock = new ReentrantLock();
 
-	@Override
-	public void run() {
-		try {
-			// 加锁
-			lock.lock();
-			doSomething();
-		} finally {
-			// 释放锁
-			lock.unlock();
-		}
+    @Override
+    public void run() {
+	try {
+	    // 加锁
+	    lock.lock();
+	    doSomething();
+	} finally {
+	    // 释放锁
+	    lock.unlock();
 	}
+    }
 }
 
 /**
@@ -104,10 +104,10 @@ class Task_Lock extends Task implements Runnable {
  */
 class Task_Sync extends Task implements Runnable {
 
-	@Override
-	public void run() {
-		synchronized ("Sync") {
-			doSomething();
-		}
+    @Override
+    public void run() {
+	synchronized ("Sync") {
+	    doSomething();
 	}
+    }
 }

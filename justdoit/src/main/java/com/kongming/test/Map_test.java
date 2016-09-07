@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * @author km-zhou
+ * @author admin@izhoujie.com
  * 
  *         Map的一些测试
  *

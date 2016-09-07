@@ -1,4 +1,4 @@
-package com.kongming.test;
+package com.kongming.definejar;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -7,7 +7,7 @@ import java.util.Properties;
 import com.izhoujie.Zhou_test.I_test;
 
 /**
- * @author km-zhou
+ * @author admin@izhoujie.com
  * 
  *         在JDK中加入自定义的jar包后可直接new出自定义对象
  * 
