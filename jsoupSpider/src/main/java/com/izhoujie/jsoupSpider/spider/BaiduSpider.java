@@ -26,25 +26,10 @@ public class BaiduSpider implements Spider {
     private String kw = "";
     // 目标贴吧url
     private String targetURL;
-    // 总页数，每页50个主题
-    private int allPages = 0;
 
     public BaiduSpider(String kw) {
 	this.kw = kw;
 	this.targetURL = tiebaURL + kw;
-	init();
-    }
-
-    private void init() {
-
-	try {
-	    String html = WebUtil.executeGet(targetURL);
-	    Document doc = Jsoup.parse(html);
-	    doc.attr("");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-
     }
 
     public String getKw() {
@@ -113,7 +98,7 @@ public class BaiduSpider implements Spider {
     @Override
     public String listPage(int pageIndex) {
 	String url = targetURL;
-	if (pageIndex != 0) {
+	if (pageIndex > -1) {
 	    url += "&pn=" + (pageIndex * 50);
 	}
 
@@ -128,13 +113,13 @@ public class BaiduSpider implements Spider {
     @Override
     public boolean listHasNext(String html) {
 	Document doc = Jsoup.parse(html);
-	return doc.getElementsByClass("last").size() > 0;
+	return doc.select("a.last").size() > 0;
     }
 
     @Override
     public String topicPage(String url, int pageIndex) {
 	String pageUrl = url;
-	if (pageIndex != 0) {
+	if (pageIndex > 0) {
 	    pageUrl += "?pn=" + pageIndex;
 	}
 
@@ -150,20 +135,19 @@ public class BaiduSpider implements Spider {
     @Override
     public boolean topicHasNext(String html) {
 	Document doc = Jsoup.parse(html);
-	Elements pagerList = doc.getElementsByClass("pager_theme_5");
+	Elements pageList = doc.getElementsByClass("pager_theme_5");
 
-	if (pagerList == null || pagerList.isEmpty()) {
+	if (pageList == null || pageList.isEmpty()) {
 	    return false;
 	}
 
-	Elements pagerA = pagerList.get(0).getElementsByTag("a");
-	for (int i = 0; i < pagerA.size(); i++) {
-	    Element a = pagerA.get(i);
+	Elements pageLinks = pageList.get(0).getElementsByTag("a");
+	for (int i = 0; i < pageLinks.size(); i++) {
+	    Element a = pageLinks.get(i);
 	    if ("下一页".equals(a.text())) {
 		return true;
 	    }
 	}
-
 	return false;
     }
 }

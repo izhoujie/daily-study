@@ -1,8 +1,7 @@
 package com.izhoujie.jsoupSpider;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.jsoup.helper.Validate;
 
 import com.izhoujie.jsoupSpider.entity.Topic;
 import com.izhoujie.jsoupSpider.entity.TopicItem;
@@ -24,19 +23,36 @@ public class Main {
 	// Validate.isTrue(args.length == 1, "参数正常：" + args[0]);
 	// 直接参数-测试用
 	String tieba = "lego";
+	int pages = 20;
 	Spider baiduEnSpider = new BaiduSpider(tieba);
-	String listPageHtml = baiduEnSpider.listPage(0);
 
-	List<Topic> topics = baiduEnSpider.parseListPage(listPageHtml);
-	System.out.println("topics:" + topics.size());
-	System.exit(0);
-	for (Topic topic : topics) {
-	    String topicHtml = baiduEnSpider.topicPage(topic.getUrl(), 0);
-	    List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
-	    topic.setItems(items);
-	    topic.setCreateTime(items.get(0).getTime());
+	List<Topic> allTopics = new ArrayList<Topic>();
+
+	for (int i = 0; i < pages; i++) {
+	    String html = baiduEnSpider.listPage(0);
+	    List<Topic> topics = baiduEnSpider.parseListPage(html);
+	    allTopics.addAll(topics);
+	    // 判断是否还有下一页
+	    if (!baiduEnSpider.listHasNext(html)) {
+		break;
+	    }
 	}
-	Topic topic2 = topics.get(0);
+	System.out.println("topics:" + allTopics.size());
+	System.exit(0);
+
+	for (Topic topic : allTopics) {
+	    String url = topic.getUrl();
+	    String topicHtml = "";
+	    // 获取到的最大页数
+	    int maxPage = 20;
+	    int i = 1;
+	    do {
+		topicHtml = baiduEnSpider.topicPage(url, i);
+		List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
+	    } while (baiduEnSpider.topicHasNext(topicHtml) && i++ < maxPage);
+	}
+
+	Topic topic2 = allTopics.get(0);
 	String user = topic2.getUser();
 	String url = topic2.getUrl();
 	String title = topic2.getTitle();
