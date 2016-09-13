@@ -15,7 +15,7 @@ public class Topic {
     // 帖子标题
     private String title;
     // 贴主
-    private String user;
+    private String auther;
     // 创建时间 -帖子时间比较特殊：可能只有时间，或只有月日，或只有年月-待处理
     private String createTime;
     // 楼层评论
@@ -28,7 +28,7 @@ public class Topic {
     public Topic(String url, String title, String user, String createTime) {
 	this.url = url;
 	this.title = title;
-	this.user = user;
+	this.auther = user;
 	this.createTime = createTime;
     }
 
@@ -48,12 +48,12 @@ public class Topic {
 	this.title = title;
     }
 
-    public String getUser() {
-	return user;
+    public String getAuther() {
+	return auther;
     }
 
-    public void setUser(String user) {
-	this.user = user;
+    public void setAuther(String auther) {
+	this.auther = auther;
     }
 
     public String getCreateTime() {

@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.izhoujie.jsoupSpider.entity.Topic;
 import com.izhoujie.jsoupSpider.entity.TopicItem;
+import com.izhoujie.jsoupSpider.export.Export;
 import com.izhoujie.jsoupSpider.spider.BaiduSpider;
 import com.izhoujie.jsoupSpider.spider.Spider;
+import com.izhoujie.jsoupSpider.util.ConfigReader;
 
 /**
  * @author admin@izhoujie.com
@@ -39,30 +41,44 @@ public class Main {
 	}
 	System.out.println("topics:" + allTopics.size());
 
+	StringBuffer buffer1 = new StringBuffer();
+	buffer1.append("帖子链接,帖子标题,帖主\n");
+	for (Topic topic : allTopics) {
+	    buffer1.append(topic.getUrl()).append(",");
+	    buffer1.append(topic.getTitle().replaceAll(",", "，")).append(",");
+	    buffer1.append(topic.getAuther()).append(",\n");
+	}
+
+	String path = ConfigReader.get("savePath");
+	String name = tieba + "_themes.csv";
+	Export.saveDatasToFile(path, name, buffer1.toString());
+
+	List<TopicItem> allItems = new ArrayList<TopicItem>();
+	StringBuffer buffer2 = new StringBuffer();
 	for (Topic topic : allTopics) {
 	    String url = topic.getUrl();
 	    String topicHtml = "";
 	    // 获取到的最大页数
-	    int maxPage = 20;
+	    int maxPage = 10;
 	    int i = 1;
+	    buffer2.append("帖子标题,贴主,帖子链接\n");
+	    buffer2.append(topic.getTitle()).append(",");
+	    buffer2.append(topic.getAuther().replaceAll(",", "，")).append(",");
+	    buffer2.append(topic.getUrl()).append(",\n\n");
+
+	    buffer2.append("回帖者,回帖内容\n");
 	    do {
 		topicHtml = baiduEnSpider.topicPage(url, i);
 		List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
+		allItems.addAll(items);
 	    } while (baiduEnSpider.topicHasNext(topicHtml) && i++ < maxPage);
-	}
-	System.exit(0);
 
-	Topic topic2 = allTopics.get(0);
-	String user = topic2.getUser();
-	String url = topic2.getUrl();
-	String title = topic2.getTitle();
-	String createTime = topic2.getCreateTime();
-	List<TopicItem> items = topic2.getItems();
-
-	System.out.println(user + "\n" + url + "\n" + title + "\n" + createTime + "\n\n");
-	for (TopicItem topicItem : items) {
-	    System.out.println(
-		    topicItem.getAuther() + "\n" + topicItem.getContent() + "\n" + topicItem.getTime() + "\n\n");
+	    for (TopicItem topicItem : allItems) {
+		buffer2.append(topicItem.getAuther()).append(",");
+		buffer2.append(topicItem.getContent().replaceAll(",", "，")).append(",\n");
+	    }
+	    Export.saveDatasToFile(path, topic.getTitle() + ".csv", buffer2.toString());
+	    buffer2 = new StringBuffer();
 	}
 
     }

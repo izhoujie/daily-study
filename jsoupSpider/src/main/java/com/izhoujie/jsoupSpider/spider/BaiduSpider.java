@@ -77,23 +77,20 @@ public class BaiduSpider implements Spider {
 	List<TopicItem> items = new ArrayList<>();
 
 	Document doc = Jsoup.parse(html);
-	Elements comments = doc.getElementsByClass("l_post_bright");
-	// Elements comments = doc.select(".l_post_bright[data-field]");
+	// Elements comments = doc.getElementsByClass("l_post_bright");
+	Elements comments = doc.select(".l_post_bright[data-field]");
 	for (int i = 0; i < comments.size(); i++) {
 	    Element comment = comments.get(i);
-	    System.out.println(comment.html());
 	    Element auther = comment.getElementsByClass("p_author_name").get(0);
-	    System.out.println(auther.text());
 	    Element content = comment.getElementsByClass("p_content").get(0);
-	    System.out.println(content.text());
 	    // 如何取得评论的时间- -||
-	    Elements spans = comment.getElementsByClass("core_reply_tail");
-	    System.out.println(spans.size());
-	    for (Element element : spans) {
-
-		System.out.println(element.text());
-	    }
-	    System.exit(0);
+	    // Elements spans = comment.getElementsByClass("core_reply_tail");
+	    // System.out.println(spans.size());
+	    // for (Element element : spans) {
+	    //
+	    // System.out.println(element.text());
+	    // }
+	    // System.exit(0);
 
 	    TopicItem item = new TopicItem(auther.text(), content.text(), "");
 	    items.add(item);

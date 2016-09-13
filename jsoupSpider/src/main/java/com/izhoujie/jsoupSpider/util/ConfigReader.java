@@ -13,7 +13,7 @@ import java.util.Properties;
 public class ConfigReader {
     private static Properties properties;
 
-    public static String read(String key, String defaultValue) {
+    public static String get(String key, String defaultValue) {
 	if (properties == null) {
 	    load();
 	}
@@ -21,7 +21,7 @@ public class ConfigReader {
 	return properties.getProperty(key, defaultValue);
     }
 
-    public static String read(String key) {
+    public static String get(String key) {
 	if (properties == null) {
 	    load();
 	}
@@ -30,9 +30,10 @@ public class ConfigReader {
     }
 
     private static void load() {
-	Properties properties = new Properties();
+	Properties pro = new Properties();
 	try {
-	    properties.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	    pro.load(ClassLoader.getSystemResourceAsStream("config.properties"));
+	    properties = pro;
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}

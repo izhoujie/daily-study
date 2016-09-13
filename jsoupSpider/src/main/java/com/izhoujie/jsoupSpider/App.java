@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.izhoujie.jsoupSpider.util.ConfigReader;
 import com.izhoujie.jsoupSpider.util.WebUtil;
 
 /**
@@ -29,11 +30,10 @@ public class App {
 	Elements elements = parse.select("a[href~=.*&pn=\\d{2,}].pagination-item");
 
 	Elements elements2 = parse.select("a.last");
-	
+
 	System.out.println(elements2.size());
 	System.out.println("------------");
-	
-	
+
 	System.out.println(elements.size());
 	int num = 0;
 
@@ -49,5 +49,8 @@ public class App {
 	    System.out.println(string);
 	}
 	System.out.println(num);
+
+	String string = ConfigReader.get("savePath");
+	System.out.println(string);
     }
 }

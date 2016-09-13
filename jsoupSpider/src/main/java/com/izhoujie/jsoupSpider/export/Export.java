@@ -19,7 +19,38 @@ import java.util.List;
  *
  *         数据导出
  */
-public class IoHelper {
+public class Export {
+
+    /**
+     * @param path
+     *            保存路径
+     * 
+     * @param name
+     *            保存文件名
+     * @param content
+     *            保存内容
+     */
+    public static void saveDatasToFile(String path, String name, String content) {
+
+	new File(path).mkdirs();
+	name = name.replaceAll("[\\u005C/:\\u002A\\u003F\"<>\'\\u007C’‘“”：？]", "#");
+	File file = new File(path + name);
+	BufferedWriter bw = null;
+	try {
+	    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
+	    bw.write(content);
+	} catch (IOException e) {
+	    e.printStackTrace();
+	} finally {
+	    if (bw != null) {
+		try {
+		    bw.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	    }
+	}
+    }
 
     // 获取要扫描的文件内容
     public static List<String> getIdList(String pathname) {
@@ -64,28 +95,6 @@ public class IoHelper {
 	    if (writer != null) {
 		try {
 		    writer.close();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	    }
-	}
-    }
-
-    public static void writeResultByName(String str, String name) {
-
-	String tag = (System.currentTimeMillis() + "").substring(10);
-
-	String filePath = "F:/sina_weibo/" + name + "-" + tag + "-message.csv";
-	BufferedWriter bw = null;
-	try {
-	    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "GBK"));
-	    bw.write(str);
-	} catch (IOException e) {
-	    e.printStackTrace();
-	} finally {
-	    if (bw != null) {
-		try {
-		    bw.close();
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
