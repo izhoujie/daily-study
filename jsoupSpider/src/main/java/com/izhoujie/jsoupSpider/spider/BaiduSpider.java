@@ -47,7 +47,6 @@ public class BaiduSpider implements Spider {
 	Document doc = Jsoup.parse(html);
 	// 获取主题信息标签
 	Elements els = doc.getElementsByAttributeValue("class", "threadlist_lz clearfix");
-	System.out.println("all" + els.size());
 	for (int i = 0; i < els.size(); i++) {
 	    Element el = els.get(i);
 	    // 获取帖子title
@@ -78,17 +77,25 @@ public class BaiduSpider implements Spider {
 	List<TopicItem> items = new ArrayList<>();
 
 	Document doc = Jsoup.parse(html);
-	Elements remarks = doc.getElementsByClass("l_post_bright");
-	for (int i = 0; i < remarks.size(); i++) {
-	    Element remarkEl = remarks.get(i);
+	Elements comments = doc.getElementsByClass("l_post_bright");
+	// Elements comments = doc.select(".l_post_bright[data-field]");
+	for (int i = 0; i < comments.size(); i++) {
+	    Element comment = comments.get(i);
+	    System.out.println(comment.html());
+	    Element auther = comment.getElementsByClass("p_author_name").get(0);
+	    System.out.println(auther.text());
+	    Element content = comment.getElementsByClass("p_content").get(0);
+	    System.out.println(content.text());
+	    // 如何取得评论的时间- -||
+	    Elements spans = comment.getElementsByClass("core_reply_tail");
+	    System.out.println(spans.size());
+	    for (Element element : spans) {
 
-	    String remarkData = remarkEl.attr("data-field");
-	    int dateIndex = remarkData.indexOf("\"date\"");
-	    String time = remarkData.substring(dateIndex + 8, dateIndex + 24);
-	    Element autherEl = remarkEl.getElementsByClass("p_author_name").get(0);
-	    Element contentEl = remarkEl.getElementsByClass("p_content").get(0);
+		System.out.println(element.text());
+	    }
+	    System.exit(0);
 
-	    TopicItem item = new TopicItem(autherEl.text(), contentEl.text(), time);
+	    TopicItem item = new TopicItem(auther.text(), content.text(), "");
 	    items.add(item);
 	}
 

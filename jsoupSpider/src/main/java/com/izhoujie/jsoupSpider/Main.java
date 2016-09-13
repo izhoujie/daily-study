@@ -23,7 +23,7 @@ public class Main {
 	// Validate.isTrue(args.length == 1, "参数正常：" + args[0]);
 	// 直接参数-测试用
 	String tieba = "lego";
-	int pages = 20;
+	int pages = 1;
 	Spider baiduEnSpider = new BaiduSpider(tieba);
 
 	List<Topic> allTopics = new ArrayList<Topic>();
@@ -38,7 +38,6 @@ public class Main {
 	    }
 	}
 	System.out.println("topics:" + allTopics.size());
-	System.exit(0);
 
 	for (Topic topic : allTopics) {
 	    String url = topic.getUrl();
@@ -51,6 +50,7 @@ public class Main {
 		List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
 	    } while (baiduEnSpider.topicHasNext(topicHtml) && i++ < maxPage);
 	}
+	System.exit(0);
 
 	Topic topic2 = allTopics.get(0);
 	String user = topic2.getUser();
