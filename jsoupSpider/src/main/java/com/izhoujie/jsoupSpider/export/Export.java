@@ -33,6 +33,7 @@ public class Export {
     public static void saveDatasToFile(String path, String name, String content) {
 
 	new File(path).mkdirs();
+	// 替换win下禁止在文件中出现的特殊字符
 	name = name.replaceAll("[\\u005C/:\\u002A\\u003F\"<>\'\\u007C’‘“”：？]", "#");
 	File file = new File(path + name);
 	BufferedWriter bw = null;
