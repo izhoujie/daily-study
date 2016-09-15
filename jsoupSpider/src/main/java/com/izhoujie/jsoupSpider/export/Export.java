@@ -38,7 +38,7 @@ public class Export {
 	File file = new File(path + name);
 	BufferedWriter bw = null;
 	try {
-	    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
+	    bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "GBK"));
 	    bw.write(content);
 	} catch (IOException e) {
 	    e.printStackTrace();

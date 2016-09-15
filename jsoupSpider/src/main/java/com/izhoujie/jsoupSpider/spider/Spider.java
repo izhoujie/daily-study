@@ -14,7 +14,7 @@ import com.izhoujie.jsoupSpider.entity.TopicItem;
  */
 public interface Spider {
     /**
-     * 读取列表页html
+     * 获取主题列表html
      * 
      * @param pageIndex
      * @return
@@ -22,7 +22,7 @@ public interface Spider {
     public String listPage(int pageIndex);
 
     /**
-     * 判断列表页是否有下一页
+     * 判断主题列表是否还有下一页
      * 
      * @param html
      * @return
@@ -30,7 +30,7 @@ public interface Spider {
     public boolean listHasNext(String html);
 
     /**
-     * 读取主题页
+     * 获取主题页html
      * 
      * @param url
      * @param pageIndex
@@ -39,7 +39,7 @@ public interface Spider {
     public String topicPage(String url, int pageIndex);
 
     /**
-     * 判断主题页是否有下一页
+     * 判断主题回帖是否还有下一页
      * 
      * @param html
      * @return
@@ -47,7 +47,7 @@ public interface Spider {
     public boolean topicHasNext(String html);
 
     /**
-     * 列表页解析
+     * 主题列表html解析
      * 
      * @param pageIndex
      * @return

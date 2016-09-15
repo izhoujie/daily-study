@@ -53,13 +53,16 @@ public class Main {
 	String name = tieba + "_themes.csv";
 	Export.saveDatasToFile(path, name, buffer1.toString());
 
+	String test = baiduEnSpider.topicPage(allTopics.get(2).getUrl(), 1);
+	Export.saveDatasToFile(path, "test.html", test);
+	System.exit(0);
 	List<TopicItem> allItems = new ArrayList<TopicItem>();
-	StringBuffer buffer2 = new StringBuffer();
 	for (Topic topic : allTopics) {
+	    StringBuffer buffer2 = new StringBuffer();
 	    String url = topic.getUrl();
 	    String topicHtml = "";
 	    // 获取到的最大页数
-	    int maxPage = 10;
+	    int maxPage = 3;
 	    int i = 1;
 	    buffer2.append("帖子标题,贴主,帖子链接\n");
 	    buffer2.append(topic.getTitle()).append(",");
@@ -69,6 +72,8 @@ public class Main {
 	    buffer2.append("回帖者,回帖内容\n");
 	    do {
 		topicHtml = baiduEnSpider.topicPage(url, i);
+		Export.saveDatasToFile(path, "test.html", topicHtml);
+		System.exit(0);
 		List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
 		allItems.addAll(items);
 	    } while (baiduEnSpider.topicHasNext(topicHtml) && i++ < maxPage);
@@ -78,8 +83,6 @@ public class Main {
 		buffer2.append(topicItem.getContent().replaceAll(",", "，")).append(",\n");
 	    }
 	    Export.saveDatasToFile(path, topic.getTitle() + ".csv", buffer2.toString());
-	    buffer2 = new StringBuffer();
 	}
-
     }
 }

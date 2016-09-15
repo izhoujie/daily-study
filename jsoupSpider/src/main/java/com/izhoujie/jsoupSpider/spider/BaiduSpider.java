@@ -17,6 +17,10 @@ import com.izhoujie.jsoupSpider.util.WebUtil;
  * 
  *         2016年9月12日 16:05:14
  * 
+ *         jsoup中文API文档快速参考:http://www.open-open.com/jsoup/
+ * 
+ *         jsoup官方文档:https://jsoup.org/
+ * 
  */
 public class BaiduSpider implements Spider {
 
