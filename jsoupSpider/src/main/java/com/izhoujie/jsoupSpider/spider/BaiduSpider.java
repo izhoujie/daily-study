@@ -85,6 +85,8 @@ public class BaiduSpider implements Spider {
 	Elements comments = doc.select(".l_post_bright[data-field]");
 	for (int i = 0; i < comments.size(); i++) {
 	    Element comment = comments.get(i);
+	    System.out.println(comment.html());
+	    System.exit(0);
 	    Element auther = comment.getElementsByClass("p_author_name").get(0);
 	    Element content = comment.getElementsByClass("p_content").get(0);
 	    // 如何取得评论的时间- -||
@@ -111,7 +113,7 @@ public class BaiduSpider implements Spider {
 	}
 
 	try {
-	    return WebUtil.executeGet(url);
+	    return WebUtil.webGet(url);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
@@ -132,7 +134,8 @@ public class BaiduSpider implements Spider {
 	}
 
 	try {
-	    return WebUtil.executeGet(pageUrl);
+//	    return WebUtil.webGet2(pageUrl);
+	     return WebUtil.webGet(pageUrl);
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}

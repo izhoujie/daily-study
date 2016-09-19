@@ -24,7 +24,7 @@ public class Main {
 	// 从外部获取贴吧名字作为参数
 	// Validate.isTrue(args.length == 1, "参数正常：" + args[0]);
 	// 直接参数-测试用
-	String tieba = "lego";
+	String tieba = "李毅";
 	int pages = 1;
 	Spider baiduEnSpider = new BaiduSpider(tieba);
 
@@ -53,9 +53,9 @@ public class Main {
 	String name = tieba + "_themes.csv";
 	Export.saveDatasToFile(path, name, buffer1.toString());
 
-	String test = baiduEnSpider.topicPage(allTopics.get(2).getUrl(), 1);
-	Export.saveDatasToFile(path, "test.html", test);
-	System.exit(0);
+	// String test = baiduEnSpider.topicPage(allTopics.get(2).getUrl(), 1);
+	// Export.saveDatasToFile(path, "test.html", test);
+	// System.exit(0);
 	List<TopicItem> allItems = new ArrayList<TopicItem>();
 	for (Topic topic : allTopics) {
 	    StringBuffer buffer2 = new StringBuffer();
@@ -72,9 +72,9 @@ public class Main {
 	    buffer2.append("回帖者,回帖内容\n");
 	    do {
 		topicHtml = baiduEnSpider.topicPage(url, i);
-		Export.saveDatasToFile(path, "test.html", topicHtml);
-		System.exit(0);
+		// Export.saveDatasToFile(path, "test.html", topicHtml);
 		List<TopicItem> items = baiduEnSpider.parseTopicItems(topicHtml);
+
 		allItems.addAll(items);
 	    } while (baiduEnSpider.topicHasNext(topicHtml) && i++ < maxPage);
 

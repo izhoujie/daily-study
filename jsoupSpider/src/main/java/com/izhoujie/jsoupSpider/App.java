@@ -1,10 +1,18 @@
 package com.izhoujie.jsoupSpider;
 
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+
+import org.apache.commons.lang3.CharSetUtils;
+import org.apache.http.util.CharsetUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.izhoujie.jsoupSpider.util.CharsetUtil;
 import com.izhoujie.jsoupSpider.util.ConfigReader;
 import com.izhoujie.jsoupSpider.util.WebUtil;
 
@@ -24,7 +32,7 @@ public class App {
 	System.out.println(doc.text());
 
 	// 获取总页数
-	String html = WebUtil.executeGet("http://tieba.baidu.com/f?kw=lego");
+	String html = WebUtil.webGet("http://tieba.baidu.com/f?kw=lego");
 	Document parse = Jsoup.parse(html);
 
 	Elements elements = parse.select("a[href~=.*&pn=\\d{2,}].pagination-item");
@@ -52,5 +60,13 @@ public class App {
 
 	String string = ConfigReader.get("savePath");
 	System.out.println(string);
+
+	String s = "李毅吧";
+
+	// String ss = CharsetUtil.toGb2312(s);
+	// System.out.println(ss);
+
+	System.out.println(System.getProperty("file.encoding"));
+	System.out.println(new String(s.getBytes("gb2312"), "gb2312"));
     }
 }

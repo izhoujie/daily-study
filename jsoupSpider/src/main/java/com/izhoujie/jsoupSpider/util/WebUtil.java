@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
-
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.izhoujie.jsoupSpider.header.UserAgent;
 
 /**
@@ -17,15 +19,19 @@ import com.izhoujie.jsoupSpider.header.UserAgent;
  *         web请求
  */
 public class WebUtil {
-    public static String executeGet(String url) throws Exception {
+
+    /**
+     * @param url
+     * @return
+     */
+    public static String webGet(String url) {
 
 	BufferedReader in = null;
 	String content = null;
 
 	try {
-	    // 定义HttpClient
 	    HttpClient client = new HttpClient();
-	    // 实例化HTTP方法
+	    // 实例化一个HTTP方法
 	    GetMethod getMethod = new GetMethod(url);
 	    // TODO: 根据配置设置合适的user-agent
 	    getMethod.setRequestHeader("User-Agent", UserAgent.CHROME);
@@ -51,7 +57,7 @@ public class WebUtil {
 	} finally {
 	    if (in != null) {
 		try {
-		    in.close();// 最后要关闭BufferedReader
+		    in.close();
 		} catch (final Exception e) {
 		    e.printStackTrace();
 		}
@@ -62,5 +68,31 @@ public class WebUtil {
 	    return content.replaceAll("<!--", "").replaceAll("-->", "");
 	}
 	return content;
+    }
+
+    /**
+     * @param url
+     * @return
+     */
+    public static String webGet2(String url) {
+
+	// 获得一个模拟浏览器对象
+	WebClient webClient = new WebClient(BrowserVersion.FIREFOX_24);
+	// 关闭对CSS的解析
+	webClient.getOptions().setCssEnabled(false);
+	// 关闭对script解析异常的抛出
+	webClient.getOptions().setThrowExceptionOnScriptError(false);
+	webClient.getOptions().setTimeout(10000);
+	HtmlPage page = null;
+	try {
+	    // 获取经过js渲染后的html
+	    page = (HtmlPage) webClient.getPage(url);
+	} catch (Exception e) {
+	    System.out.println("htmlunit 解析html页面异常");
+	}
+	// 获得html文本
+	String html = page.asXml();
+
+	return html;
     }
 }
