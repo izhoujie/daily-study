@@ -1,11 +1,13 @@
 package com.izhoujie.jsoupSpider;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 
 import org.apache.commons.lang3.CharSetUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.util.CharsetUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,11 +64,11 @@ public class App {
 	System.out.println(string);
 
 	String s = "李毅吧";
-
-	// String ss = CharsetUtil.toGb2312(s);
-	// System.out.println(ss);
+	String decode = URLDecoder.decode("%C0%EE%D2%E3", "gb2312");
+	System.out.println(decode);
+	String encode = URLEncoder.encode(s, "gb2312");
+	System.out.println(encode);
 
 	System.out.println(System.getProperty("file.encoding"));
-	System.out.println(new String(s.getBytes("gb2312"), "gb2312"));
     }
 }

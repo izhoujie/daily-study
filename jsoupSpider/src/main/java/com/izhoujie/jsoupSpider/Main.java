@@ -8,6 +8,7 @@ import com.izhoujie.jsoupSpider.entity.TopicItem;
 import com.izhoujie.jsoupSpider.export.Export;
 import com.izhoujie.jsoupSpider.spider.BaiduSpider;
 import com.izhoujie.jsoupSpider.spider.Spider;
+import com.izhoujie.jsoupSpider.util.CharsetUtil;
 import com.izhoujie.jsoupSpider.util.ConfigReader;
 
 /**
@@ -24,7 +25,7 @@ public class Main {
 	// 从外部获取贴吧名字作为参数
 	// Validate.isTrue(args.length == 1, "参数正常：" + args[0]);
 	// 直接参数-测试用
-	String tieba = "李毅";
+	String tieba = CharsetUtil.urlEncode("lego");
 	int pages = 1;
 	Spider baiduEnSpider = new BaiduSpider(tieba);
 
