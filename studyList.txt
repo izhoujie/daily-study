@@ -1,0 +1,97 @@
+linux-centos/ubuntu
+-了解操作系统
+	-起源发展
+	-系统结构
+-安装（可跳过）
+-基础命令学习练习
+	-SSH客户端（提供安装包）：Xshell
+	-基础命令学习目标（61个）：https://www.cnblogs.com/peida/tag/%E6%AF%8F%E6%97%A5%E4%B8%80linux%E5%91%BD%E4%BB%A4/default.html?page=4
+	-进阶&查询工具：http://man.linuxde.net/
+-实战操作
+	-在版本控制git和Python中使用
+
+
+
+
+数据库 mysql/oracle
+-了解数据库
+-安装（可尝试）
+-基础命令学习
+	-客户端（提供安装包）：SQLyog
+	-概览即可：http://www.yq1012.com/mysql/
+	-重点学习 10、11、12、13
+	-另一个参考：https://segmentfault.com/a/1190000006876419?utm_source=weekly&utm_medium=email&utm_campaign=email_weekly
+	-在SQLyog中练习50题：https://blog.csdn.net/fashion2014/article/details/78826299
+-实战操作
+	-在中后期pythone学习中练习sql
+
+
+
+
+版本库工具学习 git/github
+-了解svn、git版本库工具
+-git安装，GUI和命令行，主学命令行操作
+-git命令学习，GitHub学习
+	-基础命令学习：http://git.oschina.net/progit/
+	-GitHub注册、学习项目版本控制：https://github.com/izhoujie
+-实战操作
+	-将之后学习Python的学习记录同步至GitHub
+	-项目实战代码同步至GitHub
+	-多人协同开发实操
+
+
+
+
+正则（无关语言的工具）
+-基础教程
+	-教程1简略：http://www.runoob.com/regexp/regexp-tutorial.html
+	-教程2相信：https://www.cnblogs.com/yunfeifei/p/4071467.html
+-正则快捷工具
+	-chrome多功能插件：Web前端助手 FeHelper
+
+
+
+
+前端技术栈
+-基础
+	-html/html5、css/css3、js
+	-快速教程/概览：http://www.runoob.com/
+-进阶
+	-html、css的各类预编译器
+	-js的各种流行库 EG: VUE、React、Node.js等
+-关联
+	-微信小程序
+	-优秀开发
+
+
+
+
+=============整理中=============
+Python学习及实战
+	to do...
+
+
+实战项目题：
+
+-猜数字
+	-难度1：程序先随机生成一个100内的整数，然后等待输入开始猜数，错则继续，对的终止并打印之前的猜数记录。
+	-难度2：增加校验，只能输入整数number。
+	-难度3：增加“后门”，在输入“秘密指令”后程序下一次会输出谜底，但猜数仍继续。
+-点球大战
+	-难度1：与程序轮流点球，球门只分左右，守门选一个方向，进攻选一个方向，方向不一则进攻得分，否则不得分，并交换攻防，五局三胜制。
+	-难度2：进攻如果得分则继续进攻而不换位。
+	-难度3：只有一方领先对方至少2分时游戏结束。
+	-难度4：以上，游戏结束时，打印所有的对局数据。
+-天气查询
+	-难度1：查询当前指定地区的天气信息（API自寻）。
+	-难度2：查询指定地区最近一周的天气信息。
+	-难度3：查询指定地区指定日期的天气信息。
+-数据脱敏
+	-难度1：手机号4~7位、身份证6~15位替换为*，可批处理txt或者Excel文件。
+	-难度2：替换的位置可指定。
+	-难度3：处理前备份原文件。
+-黑色星期五
+	-打印某年内所有的黑色星期五日期。
+-何时生日？
+	-生日是8位数字，例如20181210，现有一人生日，其8个数均不相同，求其生日。
+-
